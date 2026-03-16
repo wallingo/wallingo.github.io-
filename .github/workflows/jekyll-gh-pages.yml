@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚠️ Sicherheitsübung – OSZ-IMT</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #0a0e1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(200,30,30,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(30,60,200,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 680px;
+      width: 100%;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 0 4px rgba(220,53,69,0.4), 0 30px 80px rgba(0,0,0,0.6);
+      animation: pulse-border 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-border {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(220,53,69,0.4), 0 30px 80px rgba(0,0,0,0.6); }
+      50%       { box-shadow: 0 0 0 8px rgba(220,53,69,0.7), 0 30px 80px rgba(0,0,0,0.6); }
+    }
+
+    /* RED ALERT HEADER */
+    .alert-header {
+      background: linear-gradient(135deg, #c0392b 0%, #922b21 100%);
+      color: white;
+      text-align: center;
+      padding: 36px 24px 28px;
+      position: relative;
+    }
+    .alert-header .icon {
+      font-size: 64px;
+      display: block;
+      animation: shake 0.6s ease-in-out 0.5s 3;
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-8px) rotate(-3deg); }
+      40% { transform: translateX(8px) rotate(3deg); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    .alert-header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-top: 14px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .alert-header .sub {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-top: 6px;
+    }
+
+    /* BODY CONTENT */
+    .content {
+      padding: 32px 36px;
+    }
+
+    .message-box {
+      background: #fdf0ef;
+      border-left: 5px solid #c0392b;
+      border-radius: 0 8px 8px 0;
+      padding: 20px 22px;
+      margin-bottom: 28px;
+    }
+    .message-box p {
+      font-size: 16px;
+      line-height: 1.65;
+      color: #2c2c2c;
+    }
+    .message-box strong {
+      color: #c0392b;
+    }
+
+    .data-stolen {
+      background: #1a1a2e;
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-bottom: 28px;
+      color: #eee;
+    }
+    .data-stolen h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #e74c3c;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .data-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 14px;
+      font-family: 'Courier New', monospace;
+    }
+    .data-item:last-child { border-bottom: none; }
+    .data-item .label { color: #aaa; min-width: 140px; }
+    .data-item .value {
+      color: #e74c3c;
+      font-weight: bold;
+      animation: blink-red 1.2s ease-in-out infinite;
+    }
+    @keyframes blink-red {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* GREEN REASSURANCE BOX */
+    .reassurance {
+      background: #eafaf1;
+      border: 2px solid #27ae60;
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-bottom: 28px;
+    }
+    .reassurance h3 {
+      color: #1e8449;
+      font-size: 17px;
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .reassurance p {
+      color: #1a5276;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* TIPS */
+    .tips h3 {
+      color: #1a3a5c;
+      font-size: 16px;
+      margin-bottom: 14px;
+      border-bottom: 2px solid #d6e4f0;
+      padding-bottom: 8px;
+    }
+    .tip-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+    .tip-num {
+      background: #1a3a5c;
+      color: white;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .tip-text { font-size: 14px; color: #333; line-height: 1.55; }
+
+    /* FOOTER */
+    .card-footer {
+      background: #1a3a5c;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+    }
+    .card-footer strong { color: #fff; }
+    .card-footer .logo-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="alert-header">
+      <span class="icon">🔓</span>
+      <h1>STOPP! Sie wären gerade Opfer eines Phishing-Angriffs geworden!</h1>
+      <p class="sub">Dies ist eine kontrollierte Übung des OSZ-IMT &nbsp;•&nbsp; Keine echten Daten wurden übertragen</p>
+    </div>
+
+    <div class="content">
+
+      <div class="message-box">
+        <p>
+          Sie haben soeben einen <strong>gefälschten QR-Code</strong> gescannt, der aussah als würde er zur offiziellen Webseite des OSZ-IMT führen – aber er tat es nicht.<br><br>
+          In einem <strong>echten Angriffsszenario</strong> hätten Cyberkriminelle in diesem Moment folgende Daten von Ihnen erhalten:
+        </p>
+      </div>
+
+      <div class="data-stolen">
+        <h3>⚡ Simulierte gestohlene Daten</h3>
+        <div class="data-item">
+          <span class="label">Gerät / Browser:</span>
+          <span class="value" id="device">wird ermittelt…</span>
+        </div>
+        <div class="data-item">
+          <span class="label">IP-Adresse (lokal):</span>
+          <span class="value">192.168.x.x &nbsp;[ERFASST]</span>
+        </div>
+        <div class="data-item">
+          <span class="label">Standort (grob):</span>
+          <span class="value">Berlin, Deutschland &nbsp;[VERORTET]</span>
+        </div>
+        <div class="data-item">
+          <span class="label">Zugangsdaten:</span>
+          <span class="value">Formular bereit &nbsp;[FALLE GESTELLT]</span>
+        </div>
+        <div class="data-item">
+          <span class="label">Zeitstempel:</span>
+          <span class="value" id="ts">–</span>
+        </div>
+      </div>
+
+      <div class="reassurance">
+        <h3>✅ Keine Sorge – dies ist eine Schulungsübung!</h3>
+        <p>
+          Es wurden <strong>keinerlei echte Daten</strong> übertragen oder gespeichert. Diese Seite existiert ausschließlich, um Ihnen zu zeigen, wie einfach es ist, auf einen gefälschten Link hereinzufallen. Gut, dass Sie jetzt Bescheid wissen!
+        </p>
+      </div>
+
+      <div class="tips">
+        <h3>🛡️ So schützen Sie sich beim nächsten Mal</h3>
+        <div class="tip-item">
+          <div class="tip-num">1</div>
+          <div class="tip-text"><strong>URL-Vorschau prüfen:</strong> Lassen Sie Ihren QR-Scanner die Zieladresse anzeigen, bevor Sie sie öffnen.</div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">2</div>
+          <div class="tip-text"><strong>Domain genau lesen:</strong> Achten Sie auf Tippfehler wie „0sz-imt.de" statt „oszimt.de".</div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">3</div>
+          <div class="tip-text"><strong>Kontext hinterfragen:</strong> Warum ist dieser QR-Code hier angebracht? Von wem stammt er?</div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">4</div>
+          <div class="tip-text"><strong>Im Zweifel: Nicht scannen</strong> – und das IT-Personal oder Lehrende informieren.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <span class="logo-text">OSZ-IMT</span>
+      Oberstufenzentrum Informations- und Medizintechnik &nbsp;•&nbsp; Cybersicherheitsschulung<br>
+      <em>Dieses Dokument dient ausschließlich der Sensibilisierung für digitale Bedrohungen.</em>
+    </div>
+
+  </div>
+
+  <script>
+    // Show browser/device info
+    document.getElementById('device').textContent = navigator.userAgent.split(' ').slice(-1)[0] + ' [ERKANNT]';
+    // Show timestamp
+    const now = new Date();
+    document.getElementById('ts').textContent = now.toLocaleString('de-DE') + ' [PROTOKOLLIERT]';
+  </script>
+</body>
+</html>
